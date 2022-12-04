@@ -27,8 +27,8 @@ class Round {
     draw: 3
   }
 
-  static weaponWins = {
-    rock: "sciccors",
+  static weaponWins : {rock: types.Weapon, scissors: types.Weapon, paper: types.Weapon} = {
+    rock: "scissors",
     scissors: "paper",
     paper: "rock"
   }

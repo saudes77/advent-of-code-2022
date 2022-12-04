@@ -39,7 +39,7 @@ var Round = /** @class */ (function () {
         draw: 3
     };
     Round.weaponWins = {
-        rock: "sciccors",
+        rock: "scissors",
         scissors: "paper",
         paper: "rock"
     };
