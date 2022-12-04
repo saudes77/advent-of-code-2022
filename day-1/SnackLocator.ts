@@ -13,5 +13,15 @@ class SnackLocator {
       return currentElf.caloriesAvailable() > chosenElf.caloriesAvailable() ? currentElf : chosenElf
     }, this.elves[0])
   }
+
+  elvesBySnackage(lmt: number | undefined) : Array<Elf> {
+    const rankedElves = this.elves.sort((a, b) => b.caloriesAvailable() - a.caloriesAvailable())
+
+    if (lmt) {
+      return rankedElves.slice(0, lmt)
+    }
+
+    return rankedElves
+  }
 }
 export default SnackLocator;
