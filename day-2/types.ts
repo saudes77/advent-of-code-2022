@@ -1,13 +1,13 @@
-type YourRpcChoice = "X" | "Y" | "Z"
-type OpponentRpcChoice = "A" | "B" | "C"
-type RoundChoices = [OpponentRpcChoice, YourRpcChoice]
-type Weapon = "rock" | "paper" | "scissors"
-type Outcome = "won" | "lost" | "draw"
+type OutcomeCode = "X" | "Y" | "Z"
+type WeaponCode = "A" | "B" | "C"
+type RoundChoices = [WeaponCode, OutcomeCode]
+type WeaponId = "rock" | "paper" | "scissors"
+type OutcomeId = "won" | "lost" | "draw"
 
 export {
-  YourRpcChoice,
-  OpponentRpcChoice,
+  OutcomeCode,
+  WeaponCode,
   RoundChoices,
-  Weapon,
-  Outcome
+  WeaponId,
+  OutcomeId
 }

@@ -1,58 +1,23 @@
 import * as types from "./types"
+import { Weapon, Outcome } from "./interfaces"
+import WeaponFactory from "./WeaponFactory"
+import GameRules from "./GameRules"
+import OutcomeFactory from "./OutcomeFactory"
 
 class Round {
-  opponentWeapon: types.Weapon
-  yourWeapon: types.Weapon
-
-  static yourWeaponMapping = {
-    X: "rock",
-    Y: "paper",
-    Z: "scissors"
-  }
-  static opponentWeaponMapping = {
-    A: "rock",
-    B: "paper",
-    C: "scissors"
-  }
-
-  static weaponScore = {
-    rock: 1,
-    paper: 2,
-    scissors: 3
-  }
-
-  static outcomeScore = {
-    won: 6,
-    lost: 0,
-    draw: 3
-  }
-
-  static weaponWins : {rock: types.Weapon, scissors: types.Weapon, paper: types.Weapon} = {
-    rock: "scissors",
-    scissors: "paper",
-    paper: "rock"
-  }
+  opponentWeapon: Weapon
+  yourWeapon: Weapon
+  outcome: Outcome
 
   constructor(choices: types.RoundChoices) {
-    this.opponentWeapon = Round.opponentWeaponMapping[choices[0]] as types.Weapon
-    this.yourWeapon = Round.yourWeaponMapping[choices[1]] as types.Weapon
-  }
-
-  outcome() : types.Outcome {
-    if (this.opponentWeapon === this.yourWeapon) {
-      return "draw"
-    }
-
-    if (this.opponentWeapon === Round.weaponWins[this.yourWeapon]) {
-      return "won"
-    }
-
-    return "lost"
+    this.opponentWeapon = WeaponFactory.createFromCode(choices[0])
+    const desiredOutcome = OutcomeFactory.create(choices[1])
+    this.yourWeapon = GameRules.weaponForOutcome(this.opponentWeapon, desiredOutcome)
+    this.outcome = GameRules.outcomeFromRound(this)
   }
 
   score() : number {
-    const outcomeScore = Round.outcomeScore[this.outcome()]
-    return Round.weaponScore[this.yourWeapon] + outcomeScore
+    return this.yourWeapon.score + this.outcome.score
   }
 }
 export default Round

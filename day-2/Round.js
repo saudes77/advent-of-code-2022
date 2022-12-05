@@ -1,47 +1,17 @@
 "use strict";
 exports.__esModule = true;
+var WeaponFactory_1 = require("./WeaponFactory");
+var GameRules_1 = require("./GameRules");
+var OutcomeFactory_1 = require("./OutcomeFactory");
 var Round = /** @class */ (function () {
     function Round(choices) {
-        this.opponentWeapon = Round.opponentWeaponMapping[choices[0]];
-        this.yourWeapon = Round.yourWeaponMapping[choices[1]];
+        this.opponentWeapon = WeaponFactory_1["default"].createFromCode(choices[0]);
+        var desiredOutcome = OutcomeFactory_1["default"].create(choices[1]);
+        this.yourWeapon = GameRules_1["default"].weaponForOutcome(this.opponentWeapon, desiredOutcome);
+        this.outcome = GameRules_1["default"].outcomeFromRound(this);
     }
-    Round.prototype.outcome = function () {
-        if (this.opponentWeapon === this.yourWeapon) {
-            return "draw";
-        }
-        if (this.opponentWeapon === Round.weaponWins[this.yourWeapon]) {
-            return "won";
-        }
-        return "lost";
-    };
     Round.prototype.score = function () {
-        var outcomeScore = Round.outcomeScore[this.outcome()];
-        return Round.weaponScore[this.yourWeapon] + outcomeScore;
-    };
-    Round.yourWeaponMapping = {
-        X: "rock",
-        Y: "paper",
-        Z: "scissors"
-    };
-    Round.opponentWeaponMapping = {
-        A: "rock",
-        B: "paper",
-        C: "scissors"
-    };
-    Round.weaponScore = {
-        rock: 1,
-        paper: 2,
-        scissors: 3
-    };
-    Round.outcomeScore = {
-        won: 6,
-        lost: 0,
-        draw: 3
-    };
-    Round.weaponWins = {
-        rock: "scissors",
-        scissors: "paper",
-        paper: "rock"
+        return this.yourWeapon.score + this.outcome.score;
     };
     return Round;
 }());
